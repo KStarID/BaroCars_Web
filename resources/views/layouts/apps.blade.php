@@ -178,11 +178,41 @@
     </aside>
 
     <!-- Main Content -->
-    <main class="object-center pt-10">
+    <main class="object-center pt-10 transition-margin duration-300 ease-in-out" id="main-content">
         <script>
             var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
             var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
             var logoImg = document.getElementById('logo-img');
+            var mainContent = document.getElementById('main-content');
+
+            // Fungsi untuk memperbarui margin konten saat menu terbuka/tutup
+            function updateContentMargin() {
+                const mobileMenu = document.getElementById('navbar-mobile');
+                const drawerNavigation = document.getElementById('drawer-navigation');
+
+                if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                    mainContent.style.marginTop = '10rem'; // menambah margin top saat menu mobile terbuka
+                } else {
+                    mainContent.style.marginTop = '4rem'; // default margin
+                    mainContent.style.marginLeft = '0';
+                }
+            }
+
+            // Event listener untuk tombol menu mobile
+            document.querySelector('[data-collapse-toggle="navbar-mobile"]').addEventListener('click', function() {
+                setTimeout(updateContentMargin, 10);
+            });
+
+            // Event listener untuk tombol drawer
+            document.querySelector('[data-drawer-toggle="drawer-navigation"]').addEventListener('click', function() {
+                setTimeout(updateContentMargin, 10);
+            });
+
+            // Event listener untuk perubahan ukuran layar
+            window.addEventListener('resize', updateContentMargin);
+
+            // Jalankan sekali saat halaman dimuat
+            updateContentMargin();
 
             function updateLogo() {
                 if (document.documentElement.classList.contains('dark')) {
@@ -266,3 +296,20 @@
 </body>
 
 </html>
+
+<style>
+    .transition-margin {
+        transition: margin 0.3s ease-in-out;
+    }
+
+    /* Margin default untuk semua ukuran layar */
+    #main-content {
+        margin-top: 4rem;
+        /* 64px - default margin */
+    }
+
+    /* Transisi yang lebih halus untuk drawer */
+    #drawer-navigation {
+        transition: transform 0.3s ease-in-out;
+    }
+</style>

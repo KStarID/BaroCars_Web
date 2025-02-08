@@ -22,6 +22,20 @@
                 </svg>
                 <span class="text-center">News</span>
             </a>
+
+            <a href="https://drive.google.com/file/d/1n896xn_1m42nfTfjU8fp-35WcQV5EOeq/view?usp=sharing"
+                class="flex items-center justify-center w-full text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg px-3 py-2">
+                <svg class="w-5 h-5 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    fill="currentColor" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd"
+                        d="M13 11.15V4a1 1 0 1 0-2 0v7.15L8.78 8.374a1 1 0 1 0-1.56 1.25l4 5a1 1 0 0 0 1.56 0l4-5a1 1 0 1 0-1.56-1.25L13 11.15Z"
+                        clip-rule="evenodd" />
+                    <path fill-rule="evenodd"
+                        d="M9.657 15.874 7.358 13H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-2.358l-2.3 2.874a3 3 0 0 1-4.685 0ZM17 16a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H17Z"
+                        clip-rule="evenodd" />
+                </svg>
+                <span class="text-center">Download App</span>
+            </a>
         @else
             <a href="{{ url('/news') }}"
                 class="flex items-center justify-center w-full text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg px-3 py-2">
@@ -87,11 +101,32 @@
         grid-template-rows: auto 1fr;
         min-height: 100vh;
         padding-top: 64px;
+        transition: margin-left 0.3s ease;
+    }
+
+    /* Tambahkan margin ketika menu terbuka */
+    @media (min-width: 768px) {
+        .menu-open .page-layout {
+            margin-left: 16rem;
+            /* 256px */
+        }
     }
 </style>
 
+<script>
+    // Tambahkan script untuk mendeteksi menu terbuka/tutup
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuButton = document.querySelector('[data-drawer-target="drawer-navigation"]');
+        const content = document.querySelector('.page-layout');
+
+        menuButton.addEventListener('click', function() {
+            content.parentElement.classList.toggle('menu-open');
+        });
+    });
+</script>
+
 @section('content')
-    <div class="container mx-auto my-10 page-layout">
+    <div class="container mx-auto mb-10 page-layout">
 
         @if (session('status'))
             <div id="alert-border-1"
@@ -118,7 +153,7 @@
             </div>
         @endif
 
-        <form action="{{ route('search') }}" method="GET" class="max-w-md mx-auto my-5">
+        <form action="{{ route('search') }}" method="GET" class="max-w-md mx-auto">
             <div class="flex">
 
                 <div>
@@ -223,15 +258,16 @@
         </div>
 
         <div
-            class="mx-auto p-6 my-6 bg-gray-200 border border-gray-200 rounded-lg shadow dark:text-white dark:bg-gray-900 dark:border-gray-500">
+            class="mx-auto p-4 sm:p-6 my-4 sm:my-6 bg-gray-200 border border-gray-200 rounded-lg shadow dark:text-white dark:bg-gray-900 dark:border-gray-500">
             <div class="card-header">
-                <h4 class="text-lg font-semibold" style="margin-left: 3rem; margin-right: 3rem;">Cars List
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between px-2 sm:px-8">
+                    <h4 class="text-lg font-semibold mb-2 sm:mb-0">Cars List</h4>
                     @guest
-                        <p class="float-end">Hello, Guest</p>
+                        <p class="text-lg">Hello, Guest</p>
                     @else
-                        <p class="float-end">Hello, {{ $user->displayName }}</p>
+                        <p class="text-md">Hello, {{ $user->displayName }}</p>
                     @endguest
-                </h4>
+                </div>
             </div>
         </div>
 

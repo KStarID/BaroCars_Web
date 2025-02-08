@@ -134,11 +134,34 @@
     </nav>
 
 
-    <main class="object-center pt-10">
+    <main class="object-center pt-10 transition-margin duration-300 ease-in-out" id="main-content">
         <script>
             var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
             var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
             var logoImg = document.getElementById('logo-img');
+            var mainContent = document.getElementById('main-content');
+
+            // Fungsi untuk memperbarui margin konten saat menu mobile terbuka/tutup
+            function updateContentMargin() {
+                const mobileMenu = document.getElementById('navbar-mobile');
+                if (mobileMenu.classList.contains('hidden')) {
+                    mainContent.style.marginTop = '4rem'; // 64px - default margin
+                } else {
+                    mainContent.style.marginTop = '13rem'; // menambah margin top saat menu terbuka
+                }
+            }
+
+            // Tambahkan event listener untuk tombol menu mobile
+            document.querySelector('[data-collapse-toggle="navbar-mobile"]').addEventListener('click', function() {
+                // Tunggu sebentar agar classList navbar-mobile sudah diupdate oleh Flowbite
+                setTimeout(updateContentMargin, 10);
+            });
+
+            // Tambahkan event listener untuk perubahan ukuran layar
+            window.addEventListener('resize', updateContentMargin);
+
+            // Jalankan sekali saat halaman dimuat
+            updateContentMargin();
 
             // Fungsi untuk memperbarui logo berdasarkan tema
             function updateLogo() {
@@ -189,6 +212,18 @@
         </script>
         @yield('content')
     </main>
+
+    <style>
+        .transition-margin {
+            transition: margin-top 0.3s ease-in-out;
+        }
+
+        /* Margin default untuk semua ukuran layar */
+        #main-content {
+            margin-top: 4rem;
+            /* 64px - default margin */
+        }
+    </style>
 
     <footer
         class="bg-gray-700 p-2 rounded-lg shadow sm:flex sm:items-center sm:justify-between sm:p-6 xl:p-8 dark:bg-gray-900 antialiased">
