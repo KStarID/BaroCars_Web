@@ -1,55 +1,80 @@
 @extends('layouts.app')
 
 @section('navbar_home')
-    @guest
-        <li class="nav-item">
-            <a class="nav-link text-dark" href="{{ url('/home') }}">Home</a>
-        </li>
-
-        @if (Route::has('login'))
-            <li class="nav-item">
-                <a class="nav-link text-dark" href="{{ route('login') }}">{{ __('Login') }}</a>
-            </li>
-        @endif
-
-        @if (Route::has('register'))
-            <li class="nav-item">
-                <a class="nav-link text-dark" href="{{ route('register') }}">{{ __('Register') }}</a>
-            </li>
-        @endif
-    @else
-        <li class="nav-item">
-            <a class="nav-link text-dark" href="{{ url('/home') }}">Home</a>
-        </li>
-        @if ($user->customClaims['admin'] == false)
-            <li class="nav-item">
-                <a class="nav-link text-dark" href="/home/iamadmin">Become Seller</a>
-            </li>
-        @endif
-
-        @if ($user->customClaims['admin'])
-            <li class="nav-item">
-                <a class="nav-link text-dark" href="/home/cars">{{ __('Seller Menu') }}</a>
-            </li>
-        @endif
-
-
-        <li class="nav-item">
-            <a class="nav-link text-dark" href="/home/profile">{{ __('Profile') }}</a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link text-dark" href="{{ route('logout') }}"
-                onclick="event.preventDefault();
-      document.getElementById('logout-form').submit();">
-                {{ __('Logout') }}
+    <div class="flex flex-col space-y-2 items-center">
+        @guest
+            <a href="{{ url('/home') }}"
+                class="flex items-center justify-center w-full text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg px-3 py-2">
+                <svg class="w-5 h-5 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                    viewBox="0 0 24 24">
+                    <path
+                        d="M11.293 3.293a1 1 0 0 1 1.414 0l6 6 2 2a1 1 0 0 1-1.414 1.414L19 12.414V19a2 2 0 0 1-2 2h-3a1 1 0 0 1-1-1v-3h-2v3a1 1 0 0 1-1 1H7a2 2 0 0 1-2-2v-6.586l-.293.293a1 1 0 0 1-1.414-1.414l2-2 6-6Z" />
+                </svg>
+                <span class="text-center">Home</span>
             </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                @csrf
-            </form>
-        </li>
 
-    @endguest
+            <a href="https://drive.google.com/file/d/1n896xn_1m42nfTfjU8fp-35WcQV5EOeq/view?usp=sharing"
+                class="flex items-center justify-center w-full text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg px-3 py-2">
+                <svg class="w-5 h-5 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    fill="currentColor" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd"
+                        d="M13 11.15V4a1 1 0 1 0-2 0v7.15L8.78 8.374a1 1 0 1 0-1.56 1.25l4 5a1 1 0 0 0 1.56 0l4-5a1 1 0 1 0-1.56-1.25L13 11.15Z"
+                        clip-rule="evenodd" />
+                    <path fill-rule="evenodd"
+                        d="M9.657 15.874 7.358 13H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-2.358l-2.3 2.874a3 3 0 0 1-4.685 0ZM17 16a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H17Z"
+                        clip-rule="evenodd" />
+                </svg>
+                <span class="text-center">Download App</span>
+            </a>
+        @else
+            <a href="{{ url('/home') }}"
+                class="flex items-center justify-center w-full text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg px-3 py-2">
+                <svg class="w-5 h-5 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                    viewBox="0 0 24 24">
+                    <path
+                        d="M11.293 3.293a1 1 0 0 1 1.414 0l6 6 2 2a1 1 0 0 1-1.414 1.414L19 12.414V19a2 2 0 0 1-2 2h-3a1 1 0 0 1-1-1v-3h-2v3a1 1 0 0 1-1 1H7a2 2 0 0 1-2-2v-6.586l-.293.293a1 1 0 0 1-1.414-1.414l2-2 6-6Z" />
+                </svg>
+                <span class="text-center">Home</span>
+            </a>
+
+            @if ($user->customClaims['admin'] == false)
+                <a href="/home/iamadmin"
+                    class="flex items-center justify-center w-full text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg px-3 py-2">
+                    <svg class="w-5 h-5 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                        viewBox="0 0 24 24">
+                        <path
+                            d="M12 2a5 5 0 1 0 5 5 5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3 3 3 0 0 1-3 3zm9 11v-1a7 7 0 0 0-7-7h-4a7 7 0 0 0-7 7v1h2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z" />
+                    </svg>
+                    <span class="text-center">Become Seller</span>
+                </a>
+            @endif
+
+            @if ($user->customClaims['admin'])
+                <a href="/home/cars"
+                    class="flex items-center justify-center w-full text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg px-3 py-2">
+                    <svg class="w-5 h-5 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                        viewBox="0 0 24 24">
+                        <path
+                            d="M19 8h-1.81a5.008 5.008 0 0 0-9.38 0H6a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h13a3 3 0 0 0 3-3v-8a3 3 0 0 0-3-3Zm-7-3a3 3 0 0 1 2.816 2H9.184A3 3 0 0 1 12 5Zm-9 6a1 1 0 0 1 1-1h13a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1Z" />
+                    </svg>
+                    <span class="text-center">Seller Menu</span>
+                </a>
+            @endif
+            <a href="https://drive.google.com/file/d/1n896xn_1m42nfTfjU8fp-35WcQV5EOeq/view?usp=sharing"
+                class="flex items-center justify-center w-full text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg px-3 py-2">
+                <svg class="w-5 h-5 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    fill="currentColor" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd"
+                        d="M13 11.15V4a1 1 0 1 0-2 0v7.15L8.78 8.374a1 1 0 1 0-1.56 1.25l4 5a1 1 0 0 0 1.56 0l4-5a1 1 0 1 0-1.56-1.25L13 11.15Z"
+                        clip-rule="evenodd" />
+                    <path fill-rule="evenodd"
+                        d="M9.657 15.874 7.358 13H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-2.358l-2.3 2.874a3 3 0 0 1-4.685 0ZM17 16a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H17Z"
+                        clip-rule="evenodd" />
+                </svg>
+                <span class="text-center">Download App</span>
+            </a>
+        @endguest
+    </div>
 @endsection
 
 <style>
@@ -61,86 +86,157 @@
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         transform: translateY(-5px);
     }
+
+    .page-layout {
+        grid-template-rows: auto 1fr;
+        min-height: 100vh;
+        padding-top: 64px;
+    }
 </style>
 
 @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
+    <div class="container mx-auto my-10 page-layout">
 
-                @if (session('status'))
-                    <div class="alert alert-warning mb-2">
-                        {{ session('status') }}
-                    </div>
-                @endif
-
-                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                    <ol class="carousel-indicators">
-                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
-                    </ol>
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img class="d-block w-100" src="{{ asset('admin_assets/img/1.png') }}" alt="First slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block w-100" src="{{ asset('admin_assets/img/2.png') }}" alt="Second slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block w-100" src="{{ asset('admin_assets/img/3.png') }}" alt="Third slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block w-100" src="{{ asset('admin_assets/img/4.png') }}" alt="Fourth slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block w-100" src="{{ asset('admin_assets/img/5.png') }}" alt="Fifth slide">
-                        </div>
-                    </div>
-                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
+        @if (session('status'))
+            <div id="alert-border-1"
+                class="flex items-center my-5 p-4 mb-4 text-blue-800 border-t-4 border-blue-300 bg-blue-50 dark:text-blue-400 dark:bg-gray-800 dark:border-blue-800"
+                role="alert">
+                <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                    viewBox="0 0 20 20">
+                    <path
+                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                </svg>
+                <div class="ms-3 text-sm font-medium">
+                    {{ session('status') }}
                 </div>
+                <button type="button"
+                    class="ms-auto -mx-1.5 -my-1.5 bg-blue-50 text-blue-500 rounded-lg focus:ring-2 focus:ring-blue-400 p-1.5 hover:bg-blue-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-blue-400 dark:hover:bg-gray-700"
+                    data-dismiss-target="#alert-border-1" aria-label="Close">
+                    <span class="sr-only">Dismiss</span>
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                </button>
+            </div>
+        @endif
 
-                <div class="card-1 mt-4">
-                    <div class="card-header">
-                        <h4 class="text-lg font-semibold" style="margin-left: 3rem; margin-right: 3rem;">Cars List
-                            @guest
-                                <p class="float-end">Hello, Guest</p>
-                            @else
-                                <p class="float-end">Hello, {{ $user->displayName }}</p>
-                            @endguest
-                        </h4>
-                    </div>
+        <div id="default-carousel" class="relative w-full my-5" data-carousel="slide">
+            <!-- Carousel wrapper -->
+            <div class="relative h-56 overflow-hidden rounded-lg md:h-5/6">
+                <!-- Item 1 -->
+                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                    <img src="{{ asset('admin_assets/img/1.png') }}"
+                        class="absolute block h-full w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                        alt="...">
                 </div>
+                <!-- Item 2 -->
+                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                    <img src="{{ asset('admin_assets/img/2.png') }}"
+                        class="absolute block h-full w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                        alt="...">
+                </div>
+                <!-- Item 3 -->
+                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                    <img src="{{ asset('admin_assets/img/3.png') }}"
+                        class="absolute block h-full w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                        alt="...">
+                </div>
+                <!-- Item 4 -->
+                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                    <img src="{{ asset('admin_assets/img/4.png') }}"
+                        class="absolute block h-full w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                        alt="...">
+                </div>
+                <!-- Item 5 -->
+                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                    <img src="{{ asset('admin_assets/img/5.png') }}"
+                        class="absolute block h-full w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                        alt="...">
+                </div>
+            </div>
+            <!-- Slider indicators -->
+            <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
+                <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1"
+                    data-carousel-slide-to="0"></button>
+                <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2"
+                    data-carousel-slide-to="1"></button>
+                <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3"
+                    data-carousel-slide-to="2"></button>
+                <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4"
+                    data-carousel-slide-to="3"></button>
+                <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 5"
+                    data-carousel-slide-to="4"></button>
+            </div>
+            <!-- Slider controls -->
+            <button type="button"
+                class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                data-carousel-prev>
+                <span
+                    class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                    <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M5 1 1 5l4 4" />
+                    </svg>
+                    <span class="sr-only">Previous</span>
+                </span>
+            </button>
+            <button type="button"
+                class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                data-carousel-next>
+                <span
+                    class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                    <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 9 4-4-4-4" />
+                    </svg>
+                    <span class="sr-only">Next</span>
+                </span>
+            </button>
+        </div>
 
+        <div
+            class="mx-auto p-4 sm:p-6 my-4 sm:my-6 bg-gray-200 border border-gray-200 rounded-lg shadow dark:text-white dark:bg-gray-900 dark:border-gray-500">
+            <div class="card-header">
+                <div class="flex flex-col sm:flex-row sm:justify-between px-2 sm:px-8">
+                    <h4 class="text-lg font-semibold mb-2 sm:mb-0">News List</h4>
+                    @guest
+                        <p class="text-lg">Hello, Guest</p>
+                    @else
+                        <p class="text-md">Hello, {{ $user->displayName }}</p>
+                    @endguest
+                </div>
             </div>
         </div>
 
         <!-- Cards Section -->
-        <div class="row mt-4">
+        <div class="mb-4 grid gap-5 sm:grid-cols-2 md:mb-8 lg:grid-cols-2 xl:grid-cols-3">
             @forelse($pagedPaginator->items() as $key => $item)
-                <div class="col-md-4 mb-4">
-                    <div class="card-2 bg-white shadow-lg rounded-lg overflow-hidden">
-                        <figure>
-                            <img src="{{ $item['image'] }}" alt="car!" class="object-cover w-full h-56">
-                        </figure>
-                        <div class="card-body">
-                            <h2 class="text-xl font-semibold">{{ ucwords($item['judul']) }}
-                            </h2>
-                            <span class="badge badge-pill badge-danger">
-                                <p>{{ date('d-m-Y', strtotime($item['tanggal'])) }} </p>
+                <div
+                    class="card-2 bg-white shadow-lg rounded-lg overflow-hidden dark:text-white dark:bg-gray-900 dark:border-gray-500">
+                    <figure>
+                        <img src="{{ $item['image'] }}" alt="car!" class="object-cover w-full h-56">
+                    </figure>
+                    <div class="p-5">
+                        <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            {{ ucwords($item['judul']) }}
+                            <span
+                                class="bg-red-200 text-red-800 text-xl mx-auto font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">{{ date('d-m-Y', strtotime($item['tanggal'])) }}
                             </span>
-                            <div class="flex justify-end mt-1">
-                                <a href="{{ url('/home/news_details/' . $key) }}" class="btn btn-danger">Read Now</a>
-                            </div>
+                        </h2>
+                        <div class="mt-5 flex items-center justify-end gap-4">
+                            <a href="{{ url('/home/news_details/' . $key) }}"
+                                class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                Read Now
+                                <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                                </svg>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -152,46 +248,46 @@
         </div>
 
         <!-- Pagination -->
-        <div class="row mt-4">
-            <div class="col-md-12 d-flex justify-content-center">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination">
+        <nav aria-label="Page navigation example">
+            <ul class="flex justify-center items-center -space-x-px h-10 text-base">
 
-                        {{-- Previous Page Link --}}
-                        @if ($pagedPaginator->onFirstPage())
-                            <li class="page-item disabled">
-                                <button class="page-link bg-dark" aria-disabled="true">&laquo;</button>
-                            </li>
-                        @else
-                            <li class="page-item">
-                                <button class="page-link bg-dark text-light"
-                                    onclick="window.location='{{ $pagedPaginator->previousPageUrl() }}'">&laquo;</button>
-                            </li>
-                        @endif
+                {{-- Previous Page Link --}}
+                <li>
+                    <a href="{{ $pagedPaginator->previousPageUrl() }}"
+                        class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                        <span class="sr-only">Previous</span>
+                        <svg class="w-3 h-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 6 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M5 1 1 5l4 4" />
+                        </svg>
+                    </a>
+                </li>
 
-                        {{-- Pagination Elements --}}
-                        @foreach ($pagedPaginator->getUrlRange(1, $pagedPaginator->lastPage()) as $page => $url)
-                            <li class="page-item {{ $page == $pagedPaginator->currentPage() ? 'active' : '' }}">
-                                <button class="page-link bg-dark text-light"
-                                    onclick="window.location='{{ $url }}'">{{ $page }}</button>
-                            </li>
-                        @endforeach
+                {{-- Pagination Elements --}}
+                @foreach ($pagedPaginator->getUrlRange(1, $pagedPaginator->lastPage()) as $page => $url)
+                    <li class="page-item {{ $page == $pagedPaginator->currentPage() ? 'z-10' : '' }}">
+                        <a href="{{ $url }}"
+                            class="{{ $page == $pagedPaginator->currentPage() ? 'flex items-center justify-center px-4 h-10 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>' : 'flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white' }}">
+                            {{ $page }}
+                        </a>
+                    </li>
+                @endforeach
 
-                        {{-- Next Page Link --}}
-                        @if ($pagedPaginator->hasMorePages())
-                            <li class="page-item">
-                                <button class="page-link bg-dark text-light"
-                                    onclick="window.location='{{ $pagedPaginator->nextPageUrl() }}'">&raquo;</button>
-                            </li>
-                        @else
-                            <li class="page-item disabled">
-                                <button class="page-link bg-dark" aria-disabled="true">&raquo;</button>
-                            </li>
-                        @endif
-                    </ul>
-                </nav>
-            </div>
-        </div>
+                {{-- Next Page Link --}}
+                <li>
+                    <a href="{{ $pagedPaginator->nextPageUrl() }}"
+                        class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                        <span class="sr-only">Next</span>
+                        <svg class="w-3 h-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 6 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 9 4-4-4-4" />
+                        </svg>
+                    </a>
+                </li>
 
+            </ul>
+        </nav>
     </div>
 @endsection
